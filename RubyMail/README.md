@@ -133,8 +133,7 @@ This is the error that you might see after the execution of the script, so just 
 > visit here to change the settings: [https://myaccount.google.com/lesssecureapps](https://myaccount.google.com/lesssecureapps)
 
 
-![gaccount_setting]([https://i.imgur.com/drZLivS.png](https://i.imgur.com/drZLivS.png)
-)
+![gaccount_setting](https://i.imgur.com/drZLivS.png)
 
 
 In some cases you can see the exception below:
