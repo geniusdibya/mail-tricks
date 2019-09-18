@@ -106,7 +106,7 @@ smtp.finish()
 ```
 
 ### Step 3
-run the code now
+open up command prompt and navigate to the folder that contains the file mail_script.rb and run the command below to execute the script
 
 	>ruby mail_script.rb
 
