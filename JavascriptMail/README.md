@@ -1,4 +1,5 @@
 
+
 # Send mails with javascript 
   
 
@@ -12,8 +13,9 @@ Mostly these type of data sharing requires secured connections and user credenti
 
 ## Pre requisites
 
-* Editor
-* Browser
+* Your favourite Editor (Sublime, Visual Code, CLI editors, etc)
+* Browser (to test the code)
+* SMTP Configurations (smtp server details and authentication credentials)
 
 Since we will be using **gmail smtp**, you'll have to make sure that the below settings are turned off.
 
@@ -28,9 +30,9 @@ Since we will be using **gmail smtp**, you'll have to make sure that the below s
 * Disable 2-step factor authentication.
 >link: [https://myaccount.google.com/security](https://myaccount.google.com/security)
 
-## Required Configurations
 
-### Google SMTP server configurations:
+
+#### Google SMTP server configurations would look somethng like this:
 - SMTP Server: smtp.gmail.com
 -   SMTP Username: gmail-address
 -   SMTP password: gmail-password.
@@ -111,10 +113,17 @@ function sendEmail() {
   
 Above is the basic configurations which sends a post request to the SMTP server and gets back the response  (*success response(OK) or failure response*)
   
+  #### All good to go now..
+  Open the folder where you have the file index.html and index.js, right click on the index.html file  > open in browser
+Once the browser loads the page, click on the buton **Send Email** 
+
+Thats it.. the mail is send successfully...
+... (if not, then please validate the google account settings > security >  2 Factor Authentication OR Allow less secure application settings ) *mentioned  above in **pre requisites***
+
 ### Step 5
 We can also send mails to multiple users the ‘TO’ property which can be an array instead of a single entry.
 
-/** Multiple recipient’s */
+
 ``` javascript
 function sendEmail() {
 	Email.send({
@@ -201,6 +210,3 @@ Below is the complete code:
 
 
 ### Happy Coding.....
-
-
-*  
