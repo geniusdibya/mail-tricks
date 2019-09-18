@@ -1,3 +1,4 @@
+
 # Sending mails in Ruby with SMTP
 
 
@@ -21,15 +22,13 @@ tl;dr
 We will be sending mails using core library of Ruby, so no other dependencies are requrired except following,
 
 * Ruby
-* Your favourite Editor
+* Your favourite Editor (Sublime, Visual Code, CLI editors, etc)
+* Environment setup
 
-
-## Environment Setup
 The scope of this post is to send emails from a script written in Ruby. This block of code then can be used in any application for sending mails.
-
 We will walk through the libraries involved and steps to send mails.
 
-### Installation (Windows)
+#### Installation (Windows)
 Lets install ruby first
 
 Below is the link to download binaries and executable files:
@@ -55,7 +54,7 @@ Once the setup is completed, open command prompt and run "ruby -v"
 you'll see something like the above output.
 Now you are all set with ruby environment, lets proceed with some coding...
 
-### Its Time To Code Now...
+## Its Time To Code Now...
 Sending mail would require some connection to the SMTP server to send mail template and headers from the script, so we will use a networking library to achieve connection.
 
 Ruby comes with an out of the box library named "Net::SMTP", which helps you to send internet mails using Simple Mail Transfer Protocaol.
@@ -64,10 +63,12 @@ Ruby comes with an out of the box library named "Net::SMTP", which helps you to 
 
 Here we will be configuring gmail's smtp to send mails, and this configurations are mostly similar to other smtp connections.
 
+### Step 1
 Create a new file named *mail_script.rb* and open it in your favourite editor
 >**mail_script.rb**
 
 
+### Step 2
 To begin with the steps we will first import the library as below,
 ```ruby
 require 'net/smtp'
@@ -104,17 +105,19 @@ smtp.send_message(message, FROM_EMAIL, TO_EMAIL)
 smtp.finish()
 ```
 
+### Step 3
 run the code now
 
 	>ruby mail_script.rb
 
-### Exceptions
+
 *...Something strange happens..... **EXCEPTION!!***
 
 	530 5.7.0 Must issue a STARTTLS command first .. gsmtp (Net::SMTPAuthenticationError)
 
 This means that your connection is not secured, to make it secure you must enable TLS or SSL.
 
+### Step 4
 So lets add one more line to the code 
 ``` ruby
 smtp.enable_starttls
@@ -123,11 +126,15 @@ Add this line immediately after creating an smtp clients instacne.
 
 now if you try to run the script, you'll probably see the next error (only if you are using gmail's smtp serve to send mails)
 
+
+***Exceptions again...***
 *you might see this below exception*
 
 	Error: username and password not accepted
 
 This is the error that you might see after the execution of the script, so just make sure you have turned **Allow less secure apps: ON** from your google account settings.
+
+### Soution?....
 > After enabling this toggle, try re-running the script after some time, google might have some delay in enabling this toggle. and try refreshing the google account setting's page to check if the toggle is enabled.
 > This toggle is later disabled by google if not in use.
 > visit here to change the settings: [https://myaccount.google.com/lesssecureapps](https://myaccount.google.com/lesssecureapps)
@@ -135,7 +142,7 @@ This is the error that you might see after the execution of the script, so just 
 
 ![gaccount_setting](https://i.imgur.com/drZLivS.png)
 
-
+### Some Tips..
 In some cases you can see the exception below:
 
 	check_auth_response 534-5.7.9 Application-specific password required. Learn more at (Net::SMTPAuthenticationError)
