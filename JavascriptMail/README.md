@@ -1,74 +1,61 @@
-
-
 # Send mails with javascript 
-  
-
-In this post will walk you through the steps for sending email using Smtp.js(free js library).
-Sending an email directly using client-side javascript without any server configurations with Gmail SMTP.
 
 ## Introduction
 
-SMTP is a protocol used to send a specific type of data (mail) to destined server followed by the recepient.
-Mostly these type of data sharing requires secured connections and user credentials, thus sending mails irectly through browser is not recommended, but still if you have your own SMTP server, and a robust validator then you may proceed with the approach of sending mails from Javascript (browser).
+In this tutorial you will learn the steps for sending email using Smtp.js (a free JS library). Using this you will be able to directly send email using client-side javascript without any server level configurations.
 
-## Pre requisites
+SMTP is a protocol used to send a specific type of data (i.e. email) to destined server followed by the recipient. Mostly these type of data sharing requires secured connections and user credentials, thus sending mails directly through browser is not recommended, but still if you have your own SMTP server, and a robust validator, then you may proceed with the approach of sending mails from Javascript (browser).
+
+## Prerequisites
 
 * Your favourite Editor (Sublime, Visual Code, CLI editors, etc)
 * Browser (to test the code)
 * SMTP Configurations (smtp server details and authentication credentials)
-
-Since we will be using **gmail smtp**, you'll have to make sure that the below settings are turned off.
-
->Configurations to be done before using Google SMTP:
-
-* To use gmail smtp you'll need to allow access for less secure apps. (from google account settings)
-> visit here to change the settings: [https://myaccount.google.com/lesssecureapps](https://myaccount.google.com/lesssecureapps)
-
-
+* Configure Gmail SMTP/ready with any other custom SMTP server details. In this tutorial, you will be using **Gmail SMTP** to send emails, so make sure that;
+ 1.  **Allowed access in Gmail for less secure apps:** To use Gmail SMTP you'll need to allow access for less secure apps from google account [settings](https://myaccount.google.com/lesssecureapps "settings"). Turning the below settings off will allow your Javascript to connect to Gmail.
 ![gaccount_setting](https://i.imgur.com/drZLivS.png)
 
-* Disable 2-step factor authentication.
->link: [https://myaccount.google.com/security](https://myaccount.google.com/security)
+ 2. **Disabled 2-step factor authentication:** As you're going to connect to gmail remotely using a program, so 2-step factor authentication should be disabled. Click [here](https://myaccount.google.com/security "here") to learn more on how to disable 2FA.
 
-
-
-#### Google SMTP server configurations would look somethng like this:
-- SMTP Server: smtp.gmail.com
--   SMTP Username: gmail-address
--   SMTP password: gmail-password.
+**Google SMTP server configurations would look something like this:**
+-   SMTP Server/Hostname: smtp.gmail.com
+-   SMTP Username: [Your Gmail Address]
+-   SMTP password: [Your Gmail Password]
 -   SMTP Port: 587
--   TLS/SSL: Required.
+-   TLS/SSL: Required
 
 Let’s begin with the code for sending email:
 
-## Lets Begin..
-
-Create below files in a folder,
-* index.html  
-* index.js  
-  
-1) Firstly we will use a script file provided by the SMTP js library that helps sending the mail configurations and the mail template to smtpjs.com which will then login to gmail smtp on your behalf to send the mail.  
-  
-		cdn: <script src="https://smtpjs.com/v3/smtp.js"></script>
-
->Also we can download the smtp.js from “[https://www.smtpjs.com/](https://www.smtpjs.com/)”
-
-Once we include the script, we will get a global variable in javascript named **Email** (provided by smtp.js)
+## Writing JavaScript and integrating with Gmail to send mail
 
 ### Step 1
-Include the SMTP library in index.html  
+Create below two files in a folder:
+
+```index.html```
+```index.js```
+
+### Step 2
+
+Download the [smtp.js](https://smtpjs.com/v3/smtp.js "smtp.js") or include a script tag to https://smtpjs.com/v3/smtp.js
+
+Here, in this tutorial you will be using this open source SMTPJS to send emails, so that you really don't have to do much of server level configurations.
+SMTP.js library will help connecting with Gmail SMTP on your behalf to send the mail.
+
+Once you include the script, you will get a global variable in javascript named **Email** (provided by smtp.js)
+
+Open the `index.html` and include the SMTPJS library like shown below:
+
 ``` html
 #index.html
 <head>
 	<script src="[https://smtpjs.com/v3/smtp.js](https://smtpjs.com/v3/smtp.js)"></script>  
-</head>  
+</head>
   ```
 
-### Step 2
-Then include a script file which will have the SMTP details and a mail template. Just add the file name for now, we will create it soon..
+### Step 3
+Next step is to include a script file which will have the SMTP details and a mail template. Just add the file name `index.js` for now, in the following steps you will learn what all code to be added to this JS file.
 
-
-``` html
+```html
 #index.html
 <head>
 	<script src="https://smtpjs.com/v3/smtp.js"></script>
@@ -76,8 +63,9 @@ Then include a script file which will have the SMTP details and a mail template.
 </head>
 ```
 
-### Step 3
-In HTML body we will add a button that will simply trigger the mail configured in a javascript function
+### Step 4
+
+Add a button in the HTML body, this will simply trigger the mail configured in a javascript function:
 
 index.html  
 ``` html
@@ -90,9 +78,8 @@ index.html
 </body>
 ```
 
-### Step 4
-Let’s now write the js function which does the magic of sending mails using **smtpjs.com**
-  Create a new file and name it *index.js*, the same file that we have included in the HTML (*index.html*) file.
+### Step 5
+Now write the JS function which will do the magic of sending mails using **smtpjs.com**. Create a new file and name it *index.js*, the same file that you have included in the HTML (*index.html*) file.
   
 ```javascript
 //index.js  
@@ -111,26 +98,30 @@ function sendEmail() {
 }
 ```
   
-Above is the basic configurations which sends a post request to the SMTP server and gets back the response  (*success response(OK) or failure response*)
-  
-  #### All good to go now..
-  Open the folder where you have the file index.html and index.js, right click on the index.html file  > open in browser
-Once the browser loads the page, click on the buton **Send Email** 
+Above is the basic configurations which sends a post request to the SMTP server and gets back the response:  
+```success response(OK) or failure response```
 
-Thats it.. the mail is send successfully...
-... (if not, then please validate the google account settings > security >  2 Factor Authentication OR Allow less secure application settings ) *mentioned  above in **pre requisites***
+All good to go now.
+Open the folder where you have the file index.html and index.js, right click on the index.html file  > open in browser
+Once the browser loads the page, click on the buton **Send Email**.
 
-### Step 5
-We can also send mails to multiple users the ‘TO’ property which can be an array instead of a single entry.
+That's it.. the mail is send successfully.
 
+If the mail is not sent from your Javascript, then please validate the Google account settings > security >  2 Factor Authentication OR Allow less secure application settings as mentioned  above in the prerequisites.
+
+
+### Step 6 (Optional)
+
+You can also send mails to multiple users. For that the you need to use the ‘TO’ property which can be an array instead of a single entry.
+Here's an sample 
 
 ``` javascript
 function sendEmail() {
 	Email.send({
 	Host: "smtp.gmail.com",
-	Username : "sender1 email address, sender2 email address",
-	Password : "email password",
-	To : 'recipient’s email address',
+	Username : "Your Gmail Address",
+	Password : "Your Gmail Password",
+	To : 'recipient_1_email_address, recipient_2_email_address',
 	From : "sender’s email address",
 	Subject : "email subject",
 	Body : "email body",
@@ -140,15 +131,16 @@ function sendEmail() {
 }
 ```
 
-### Step 6
-We can also send the attachments.
+### Step 7 (Optional)
+
+You can also send emails with attachments. Use the following code for sending attachments in email using Javascript:
 
   ```javascript
 function sendEmail() {
 	Email.send({
 	Host: "smtp.gmail.com",
-	Username : "sender1 email address, sender2 email address",
-	Password : "email password",
+	Username : "Your Gmail Address",
+	Password : "Your Gmail Password",
 	To : 'recipient’s email address',
 	From : "sender’s email address",
 	Subject : "email subject",
@@ -164,19 +156,14 @@ function sendEmail() {
 }
 ```
 
-### Some Tips:
+### Note
 
-The strange thing that you'll notice that there wont be any exceptions (only success) after clicking the send button. 
-Thats because your codes smtp connection to gmail is with smtpjs.com, once you click the button then the js code simply sends the content and configurations to smtpjs.com and the actual call to gmail will never be visible to the front end, only a 200 OK status is sent by smtpjs.com.
+The strange thing that you'll notice that there won't be any exceptions (you will mostly get success) after clicking the send button. That's because your code js code simply sends the content and configurations to smtpjs.com and the actual call to Gmail will never be visible to the front end, only a 200 OK status is sent by smtpjs.com. Connection to Gmail actually happens on the smtpjs end. You would never know whether the mail got sent or no.
 
-You would never know whether the mail got sent or no.
+So always make sure if you are using any other applications to send mails through Gmail SMTP, turn 2 factor authentication OFF and turn Allow less secure apps setting ON.
 
-So always make sure if you are using any other applications to send mails through gmail smtp, turn 2 factor authentication OFF and turn Allow less secure apps setting ON
+Below is the complete working code for your reference:
 
-## Conclusion
-
-Thats how we acomplished the job of sending mail using Javascript on frontend.
-Below is the complete code:
 ```html
 <!DOCTYPE html>
 <html>
@@ -208,5 +195,7 @@ Below is the complete code:
 </html>
 ```
 
+## Conclusion
 
-### Happy Coding.....
+Hope, the tutorial helped and you are now able to send emails using Javascript from the front end.
+**Happy Coding...**
