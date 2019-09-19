@@ -77,13 +77,56 @@ Now you are all set to sending mails from CLI
 
 >-vvv is the verbosity to see the logs during sending the mail
 
+Above code will send the mail without any issue.
 
+lets now try same from a shell script.
+
+```console
+foo@bar:~$ whoami
+foo
+```
+lets try attachment 
+```console
+foo@bar:~$ whoami
+foo
+```
+
+lets have aliases
+edit some file and test it...
+
+sample code on cli instead of aliases.........
+
+
+
+Alternate methods of sending mails.
+
+Method 1
 
 There are also some other tools to send mail from CLI, like **mailx**
 
 	sudo mail -s "Enter the subject" revceivers-email@gmail.com
 
 Hit the above command, add **Cc**, followed by the **mail body**, then hit **Ctrl+d** to send the mail.
+
+
+send mail from script..
+```console
+foo@bar:~$ whoami
+foo
+```
+
+
+
+Method 2
+
+sendmail
+
+send mail from script..
+```console
+foo@bar:~$ whoami
+foo
+```
+
 
 
 **Cheers!!!!!!!** there goes the mail...
