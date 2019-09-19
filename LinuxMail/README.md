@@ -236,7 +236,7 @@ crazy@kali:~/Documents/Scripts$
 
 You can append text contents from a file directly as shown below,
 ```console
-crazy@kali:~/Documents/Blogs$ echo "My Message Body" | mail -s "My Subject" crazy@yopmail.com --debug-level 6 < mail.txt 
+crazy@kali:~/Documents/Scripts$ echo "My Message Body" | mail -s "My Subject" crazy@yopmail.com --debug-level 6 < mail.txt 
 mail: sendmail binary: /usr/sbin/sendmail
 mail: Getting auth info for UID 1000
 mail: source=system, name=crazy, passwd=x, uid=1000, gid=1000, gecos=, dir=/home/crazy, shell=/bin/bash, mailbox=/var/mail/crazy, quota=0, change_uid=1
@@ -246,7 +246,7 @@ mail: mu_mailer_send_message(): using From: crazy@kali
 mail: Sending headers...
 mail: Sending body...
 mail: /usr/sbin/sendmail exited with: 0
-crazy@kali:~/Documents/Blogs$
+crazy@kali:~/Documents/Scripts$
 ```
 
 > In some cases there you can see some issues while using the above command
