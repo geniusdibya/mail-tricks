@@ -1,75 +1,63 @@
-
-
 # Linux CLI to send mails
 
-We live in an automated world, where numerous events like booking a ride or ordering food online, everything is automated in some or the other way. Similarly notifications these days are way too important to stay updated among these automated activities. Notifications can be emails, sms, push notifications, etc. I'll demonstrate you the simplest way of sending emails.
-
-In this post we will dive in to process of sending mails from terminal or from a shell script from linux operating system, using some cli tools.
+Notifications are getting more important these days to stay updated among various online activities. Moreover, these notifications can be emails, SMS or push. This tutorial is going to demonstrate you the simplest way of sending notifications, over one of the most popular channel that is email. You are going to learn the process of sending emails from the terminal or a shell script from a Linux operating system, using some of the popular CLI tools.
 
 ## Introduction
 
-Cron reports, script logs, customer registrations, ecommerce purchase orders, bank statements, etc, these events has to notify other connected systems, customers or you might want to send these information over mail to some important peoples. This rises a demand to have a utility that will send mails for you.
+This tutorial is going to help you in sending critical server-level emails like Cron reports, script logs, customer registrations, receipt, bank statement over email. There are many ways to send emails from the server, but let's explore the tool that's easy to install and easy to code.
 
-Definitely there are other ways, but lets explore the tool thats easy to install and easy to code.
+With simple libraries and little configurations, you can have a CLI tool in your Linux OS that you can use to send mails from the terminal.
 
-With simple libraries and a little configurations, you can have a cli tool in your linux os that will help you send mails from the terminal.
-
-
-## Pre Requisites
+## Prerequisites
 * Linux operating system
-* SMTP Configurations (smtp server details and authentication credentials)
+* SMTP Configurations (SMTP server details and authentication credentials)
 * Your favourite editor (Optional)
-
-yes thats all you need.
-
-Sending mail requires a registered SMTP server that accepts the mail template and recepient details and forwards the mail to the destination.
-
-We will be using **gmail smtp**, you'll have to make sure that the below settings are turned off.
-
->Configurations to be done before using Google SMTP:
-
-* To use gmail smtp you'll need to allow access for less secure apps. (from google account settings)
-> visit here to change the settings: [https://myaccount.google.com/lesssecureapps](https://myaccount.google.com/lesssecureapps)
-
-
+* Configure Gmail SMTP/ready with any other custom SMTP server details. In this tutorial, you are going to use **Gmail SMTP** to send emails, so make sure that;
+ 1.  **Allowed access in Gmail for less secure apps:** To use Gmail SMTP you'll need to allow access for less secure apps from google account [settings](https://myaccount.google.com/lesssecureapps "settings"). Turning the below settings off is going to allow your Javascript to connect to Gmail.
 ![gaccount_setting](https://i.imgur.com/drZLivS.png)
 
-* Disable 2-step factor authentication.
->link: [https://myaccount.google.com/security](https://myaccount.google.com/security)
+ 2. **Disabled 2-step factor authentication:** As you're going to connect to Gmail remotely using a program, so 2-step factor authentication should be disabled. Click [here](https://myaccount.google.com/security "here") to learn more on how to disable 2FA.
 
-
-
-#### Google SMTP server configurations would look somethng like this:
-- SMTP Server: smtp.gmail.com
--   SMTP Username: gmail-address
--   SMTP password: gmail-password.
+**Google SMTP server configurations would look something like this:**
+-   SMTP Server/Hostname: smtp.gmail.com
+-   SMTP Username: [Your Gmail Address]
+-   SMTP password: [Your Gmail Password]
 -   SMTP Port: 587
--   TLS/SSL: Required.
+-   TLS/SSL: Required
 
-## Its time to open up a terminal.....
-There are different ways and different tools using which you can send mails, we will walk through 2 different tools and different use cases.
+## Its time to now open terminal
+There are various tools and libraries which you can install to send emails from the terminal. Few of the popular libraries are:
+- sSMTP
+- Mailx
 
+In this tutorial, you're going to learn the steps on how to install and use sSMTP to send mails from your Linux command line. Click here, in case you want to learn how to install and use Mailx to send mails from your Linux command line.
 
-## sSMTP
+## How to install sSMTP to send mails from your Linux command line (CLI)
 
 ### Step 1
 
-Lets install ssmtp to proceed by following command.
+Use the below command to install ssmtp:
 
 	sudo apt-get install ssmtp
 
-> For CentOS : **sudo yum install ssmtp**
->In CentOS you may see an error during installation as  **"package ssmtp is not available"**,
->Below command is helpful to fix the issue.
->>sudo yum --enablerepo=extras install epel-release
+**Optional:**
+CentOS users can use the below command to install ssmtp:
+
+	sudo yum install ssmtp
+
+In CentOS, you may see an error during installation as  **"package ssmtp is not available"**, in such a case below command, is going to be helpful to fix the issue:
+
+	sudo yum --enablerepo=extras install epel-release
 
 ###  Step 2
-Once ssmtp gets installed successfully, lets set some global configurations used for mailing.
+Once ssmtp installed successfully, you need to make the below global configurations which required for sending mail.
 
-Open the file ***/etc/ssmtp/ssmtp.conf*** in terminal
+Open the following file in your favourite editor:
+
 	sudo vim /etc/ssmtp/ssmtp.conf
 
-edit the above file with below details
+Edit the above file with the below details:
+
 ```
 mailhub=smtp.gmail.com:587
 useSTARTTLS=YES
@@ -77,24 +65,25 @@ AuthUser=username-here
 AuthPass=password-here
 TLS_CA_File=/etc/pki/tls/certs/ca-bundle.crt
 ```
+The above configuration is going to be used to send email using your Gmail SMTP. In case you want to use some other third-party SMTP, then mention the hostname of the same. e.g. if you want to use Pepipost SMTP, then instead of smtp.gmail.com, you need to mention smtp.pepipost.com in the mailhub parameter. **mailhub** is used for SMTP server address which consists of two part host:port
 
-Above **"mailhub"** is the smtp server address with host:port
+Now you are all set to sending mails from the command line (CLI).
 
-Now you are all set to sending mails from CLI
 ### Step 3
 
-This step can have multipe use cases, lets explore some of the use cases
+There are multiple ways to use ssmtp command to send emails.
 
-#### Use case 1
+#### Case 1: Send mail directly from the command line
+
+For this, copy-paste the below command, and you're ready to send email from your command line:
+
 	echo "Test message from Linux server using ssmtp" | sudo ssmtp -vvv revceivers-email@gmail.com
 
->-vvv is the verbosity to see the logs during sending the mail
+>-vvv is the verbosity to see the logs while sending the mail
 
-Above code will send the mail without any issue if the configurations are set correctly and the pre requisite steps are followed.
+#### Case 2: Send mail from a shell script
 
-#### Use case 2
-Lets now try same from a shell script.
-Open any editor and create a file and name it mail.sh
+You can use the same ssmtp to send mail from a shell script too. For that, open your preferred editor and create a shell script file with name say `mail.sh` and copy-paste the below code:
 
 ```bash
 #!/bin/sh  
@@ -104,12 +93,25 @@ MESSAGE="Hey There! This is a test mail"
 
 echo $MESSAGE | sudo ssmtp -vvv $TO
 ```
-
+Make sure you have set the right permission access to your script file. If not, here is the command to set the permission:
 
 ```console
-crazy@kali:~/Documents/Scripts$ sudo chmod 755 mail.sh 
-crazy@kali:~/Documents/Scripts$
-crazy@kali:~/Documents/Scripts$ sudo ./mail.sh 
+$ sudo chmod 755 mail.sh 
+```
+
+Now, the code is ready to be executed. Just run the shell script using the below command:
+```console
+$ sudo ./mail.sh
+```
+Hope now you're able to send mails using the shell script too.
+
+Below are few errors/exceptions which you may encounter while sending the mail using ssmtp:
+
+### Error 1
+In case while sending the email, if might get the below error as output:
+ssmtp: Authorization failed (535 5.7.8 https://support.google.com/mail/?p=BadCredentials u65smyez14952a76922r5pfui.104 - gsmtp)
+
+```console
 [<-] 220 smtp.gmail.com ESMTP u65sm14952769pfu.104 - gsmtp
 [->] EHLO kali
 [<-] 250 SMTPUTF8
@@ -125,17 +127,17 @@ crazy@kali:~/Documents/Scripts$ sudo ./mail.sh
 ssmtp: Authorization failed (535 5.7.8  https://support.google.com/mail/?p=BadCredentials u65smyez14952a76922r5pfui.104 - gsmtp)
 crazy@kali:~/Documents/Scripts$ 
 ```
+**Solution:** In such a case, try doing following as solution:
+1. Enable **"Allow less secure app"** in your google accounts settings, as explained in the above prerequisites section.
 
-You can see teh error above
-**ssmtp: Authorization failed (535 5.7.8 https://support.google.com/mail/?p=BadCredentials u65smyez14952a76922r5pfui.104 - gsmtp)**
+2. The provided login credentials can be invalid. Make sure you have the correct credentials.
 
->Enable **"Allow less secure app"** in google accounts settings
-
-Or, the provided credentials can be invalid, make sure you have the correct credentials.
-
-Lets Re-run it after enabling the google settings and validating the creds.
+Once the issue is fixed, re-run the shell script and the success output will be something like this; 
 ```console
-crazy@kali:~/Documents/Scripts$ ./mail.sh 
+$ sudo ./mail.sh
+```
+Output:
+```console
 [<-] 220 smtp.gmail.com ESMTP h8sm1096aae22880pfo.64 - gsmtp
 [->] EHLO kali
 [<-] 250 SMTPUTF8
@@ -163,113 +165,10 @@ crazy@kali:~/Documents/Scripts$ ./mail.sh
 [<-] 250 2.0.0 OK  1568909725 h8smqer10962480pfo.64 - gsmtp
 [->] QUIT
 [<-] 221 2.0.0 closing connection h8smqer10962480pfo.64 - gsmtp
-crazy@kali:~/Documents/Scripts$ 
 ```
-
-##  mailx
-
-### Step 1
-Lets install mailx in terminal.
-
-> On debian system mail is part of mailutils, and on RedHat mail is part of mailx,
- so in relevant systems use the command below:
-
-***Debian***
-	
-	sudo apt-get install mailutils
-***RedHat***
-
-	sudo yum install mailx
-
-### Step 2
-
-Same as step 2 in above methodology.
-Provide the smtp server details and do the corresponding settings in google account settings.
-
-> You may come across error like :
-``` console
-mail: cannot send message: Process exited with a non-zero status
-```
-If this error troubles you, then please make sure you have the valid configurations in the **/etc/ssmtp/ssmtp.conf file** and if this file doesnt exists then create it and provide the details
-
-```
-mailhub=smtp.gmail.com:587
-useSTARTTLS=YES
-AuthUser=username-here
-AuthPass=password-here
-TLS_CA_File=/etc/pki/tls/certs/ca-bundle.crt
-```
-
-### Step 3
-
-#### Usage 1
-In your terminal type the command to send the mail and see the output.
-```console
-crazy@kali:~/Documents/Scripts$ echo "My Message Body" | mail -s "My Subject" crazy@yopmail.com --debug-level 6
-mail: sendmail binary: /usr/sbin/sendmail
-mail: Getting auth info for UID 1000
-mail: source=system, name=crazy, passwd=x, uid=1000, gid=1000, gecos=, dir=/home/crazy, shell=/bin/bash, mailbox=/var/mail/crazy, quota=0, change_uid=1
-mail: Getting auth info for UID 1000
-mail: source=system, name=crazy, passwd=x, uid=1000, gid=1000, gecos=, dir=/home/crazy, shell=/bin/bash, mailbox=/var/mail/crazy, quota=0, change_uid=1
-mail: mu_mailer_send_message(): using From: crazy@kali
-mail: Sending headers...
-mail: Sending body...
-mail: /usr/sbin/sendmail exited with: 0
-crazy@kali:~/Documents/Scripts$ 
-```
-
-
-#### Usage 2
-
-```console
-crazy@kali:~/Documents/Scripts$ sudo mail -s "My subject" crazy@yopmail.com
-Cc: crazy1@yopmail.com
-Type your message body
-new line 
-new line
-to end this type Ctrl+d
-crazy@kali:~/Documents/Scripts$ 
-
-```
-
-#### Usage 3
-
-You can append text contents from a file directly as shown below,
-```console
-crazy@kali:~/Documents/Scripts$ echo "My Message Body" | mail -s "My Subject" crazy@yopmail.com --debug-level 6 < mail.txt 
-mail: sendmail binary: /usr/sbin/sendmail
-mail: Getting auth info for UID 1000
-mail: source=system, name=crazy, passwd=x, uid=1000, gid=1000, gecos=, dir=/home/crazy, shell=/bin/bash, mailbox=/var/mail/crazy, quota=0, change_uid=1
-mail: Getting auth info for UID 1000
-mail: source=system, name=crazy, passwd=x, uid=1000, gid=1000, gecos=, dir=/home/crazy, shell=/bin/bash, mailbox=/var/mail/crazy, quota=0, change_uid=1
-mail: mu_mailer_send_message(): using From: crazy@kali
-mail: Sending headers...
-mail: Sending body...
-mail: /usr/sbin/sendmail exited with: 0
-crazy@kali:~/Documents/Scripts$
-```
-
-> In some cases there you can see some issues while using the above command
->Weird Warning:  **mail: Null message body; hope that's ok**
-
-The issue can be because of failure of the echo or the file output, that unfortunately gets passed as empty output as an input body to mail command, so to avoid that, please make sure you have correct content as input to mail
-
-## telnet
-
-
-
-Well..
-**Cheers!!!!!!!** there goes the mail...
-
 ## Conclusion
-So we saw 2 different ways to send mail using cli of linux os.
+Hope the steps explained above were useful and you were able to successfully send mail using linux command line (CLI). Feel free to contribute, in case you encountered some issue which is not listed as a part of this tutorials.
+Use below comments section to ask/share any feedback.
 
-There a lot you could do with these mailing tool like adding multiple recepient, adding people to Cc, etc.
-To know more about it just type the mail command and --help to know more about the configs for sending mails.
+**<!-- Happy Coding />**
 
-> Note: If you are using gmail's smtp server
->**"username and password not accepted"**
-
-This is the first error that you might see after the execution of the script, so just make sure you have turned **Allow less secure apps: ON** from your google account settings.
-> After enabling this toggle, try re-running the script after some time, google might have some delay in enabling this toggle. and try refreshing the google account setting's page to check if the toggle is enabled.
-> This toggle is later disabled by google if not in use.
